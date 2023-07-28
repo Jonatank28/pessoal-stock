@@ -6,18 +6,37 @@
 :root {
     --bg-primary: #fff;
     --bg-secundary: #E5E7EB;
-    --bg-division: #D1D5DB;
     --text-primary: #000;
     --text-secundary: #6E6E6E;
-    --hover-bg: #1F1F23;
-    --hover-bg: #F3F3F6;
+    --decoration: #FCA5A5;
+    --background-start-rgb: 180, 180, 180;
+    --background-end-rgb: 40, 40, 40;
+    --black-80: #080808;
 }
 
 .dark {
     --bg-primary: #0E0E10;
     --bg-secundary: #18181B;
-    --bg-division: #1F1F23;
     --text-primary: #fff;
     --text-secundary: #6E6E6E;
-    --hover-bg: #1F1F23;
+    --decoration: #FCA5A5;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 100, 100, 100;
+    --black-80: #080808;
+}
+
+
+.degrade-primary {
+    background: linear-gradient(to right, var(--bg-primary), var(--bg-secondary));
+}
+
+.degrade-secondary {
+    background: linear-gradient(to top, var(--black-80), var(--text-secundary));
+}
+
+
+.lp {
+    background: linear-gradient(to bottom, rgb(var(--background-start-rgb)), rgb(var(--background-end-rgb)));
+    /* background: linear-gradient(to right, #ffffff, #000000); */
+    /* background-image: radial-gradient(circle at 25.77% 84.6%, #543f3b 0, #473735 16.67%, #392f2e 33.33%, #292626 50%, #1a1d1d 66.67%, #091615 83.33%, #000d09 100%); */
 }
