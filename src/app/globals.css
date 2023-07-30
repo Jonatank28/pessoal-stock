@@ -24,19 +24,3 @@
     --background-end-rgb: 100, 100, 100;
     --black-80: #080808;
 }
-
-
-.degrade-primary {
-    background: linear-gradient(to right, var(--bg-primary), var(--bg-secondary));
-}
-
-.degrade-secondary {
-    background: linear-gradient(to top, var(--black-80), var(--text-secundary));
-}
-
-
-.lp {
-    background: linear-gradient(to bottom, rgb(var(--background-start-rgb)), rgb(var(--background-end-rgb)));
-    /* background: linear-gradient(to right, #ffffff, #000000); */
-    /* background-image: radial-gradient(circle at 25.77% 84.6%, #543f3b 0, #473735 16.67%, #392f2e 33.33%, #292626 50%, #1a1d1d 66.67%, #091615 83.33%, #000d09 100%); */
-}

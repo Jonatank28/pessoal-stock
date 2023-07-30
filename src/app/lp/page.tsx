@@ -1,10 +1,14 @@
-import React from 'react'
+'use client'
+import useAuth from '@/hooks/useAuth'
 
 const page = () => {
+    const { user } = useAuth()
     return (
-        <div className="lp w-full h-full">
-            <h1>lp</h1>
-        </div>
+        user && (
+            <div className="lp w-full h-full">
+                <h1>lp</h1>
+            </div>
+        )
     )
 }
 

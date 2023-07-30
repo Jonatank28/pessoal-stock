@@ -1,8 +1,8 @@
 import React from 'react'
-import { MenuSidebarProps } from '@/types/MenuSideBar'
+import { menuSidebarProps } from '@/types/MenuSideBar'
 
 const MenusSideBar = () => {
-    const data: MenuSidebarProps[] = [
+    const data: menuSidebarProps[] = [
         {
             id: 1,
             title: 'Dashboard',

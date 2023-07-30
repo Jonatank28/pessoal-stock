@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import useAuth from '@/hooks/useAuth'
 
 const page = () => {
-    const { login } = useAuth()
+    const { login, errorLogin } = useAuth()
 
     const {
         register,
@@ -45,6 +45,11 @@ const page = () => {
                             minLength={4}
                             required={true}
                         />
+                        {errorLogin && (
+                            <p className="text-sm text-red-500">
+                                Email ou senha incorretos
+                            </p>
+                        )}
                         <div className="pt-4">
                             <Button title="Enviar" />
                         </div>
