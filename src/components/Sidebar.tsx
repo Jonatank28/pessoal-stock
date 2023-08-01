@@ -14,7 +14,7 @@ const Sidebar = () => {
     }
 
     return (
-        <div className="w-60 bg-secundary h-screen flex justify-center">
+        <div className="w-60 bg-secondary h-screen flex justify-center">
             <div className="p-2 flex flex-col gap-6 w-full mt-7">
                 <div className="p-1 bg-primary flex justify-center items-center rounded-md">
                     <h1>LOGO</h1>

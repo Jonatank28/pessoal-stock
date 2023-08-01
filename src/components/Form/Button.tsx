@@ -2,13 +2,17 @@ import React from 'react'
 
 interface Props {
     title: string
+    className?: string
+    type: 'button' | 'submit' | 'reset'
+    onClick?: () => void
 }
 
-const Button = ({ title }: Props) => {
+const Button = ({ title, className, type, onClick }: Props) => {
     return (
         <button
-            type="submit"
-            className="w-full border-none bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-2x1 rounded-lg p-2"
+            onClick={onClick}
+            type={type}
+            className={`px-2 border-none text-white  transition-colors shadow-2x1 rounded-lg p-2 ${className}`}
         >
             {title}
         </button>

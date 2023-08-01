@@ -5,9 +5,8 @@
 /* Temas */
 :root {
     --bg-primary: #fff;
-    --bg-secundary: #E5E7EB;
-    --text-primary: #000;
-    --text-secundary: #6E6E6E;
+    --bg-secondary: #F7F7F7;
+    --text-secondary: #6E6E6E;
     --decoration: #FCA5A5;
     --background-start-rgb: 180, 180, 180;
     --background-end-rgb: 40, 40, 40;
@@ -15,12 +14,60 @@
 }
 
 .dark {
-    --bg-primary: #0E0E10;
-    --bg-secundary: #18181B;
-    --text-primary: #fff;
-    --text-secundary: #6E6E6E;
+    --bg-primary: #000;
+    --bg-secondary: #1A1A1A;
+    --text-secondary: #6E6E6E;
     --decoration: #FCA5A5;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 100, 100, 100;
     --black-80: #080808;
+}
+
+/* Btns */
+.error {
+    @apply bg-red-500;
+}
+
+.primary {
+    @apply bg-blue-500;
+}
+
+.warning {
+    @apply bg-yellow-500;
+}
+
+.success {
+    @apply bg-green-500;
+}
+
+.error:hover {
+    @apply bg-red-600;
+}
+
+.primary:hover {
+    @apply bg-blue-600;
+}
+
+.warning:hover {
+    @apply bg-yellow-600;
+}
+
+.success:hover {
+    @apply bg-green-600;
+}
+
+
+/*!Scroll costumizado */
+::-webkit-scrollbar {
+    width: 0.5rem;
+    heigth: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #0D1D25;
+    border-radius: 1rem;
+}
+
+::-webkit-scroll-track {
+    background-color: transparent;
 }

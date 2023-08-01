@@ -4,9 +4,14 @@ interface SelectProps {
     register: any
     errors: any
     name: string
-    options: Option[] | undefined // Array de objetos Option
-    required: boolean
+    options: options[] | undefined
+    required?: boolean
     label: string
+}
+
+interface options {
+    id: number
+    name: string
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -28,7 +33,7 @@ const Select: React.FC<SelectProps> = ({
                 <option value="" disabled selected>
                     Selecione
                 </option>
-                {options?.map((option) => (
+                {options?.map((option: options) => (
                     <option value={option.id} key={option.id}>
                         {option.name}
                     </option>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { menuSidebarProps } from '@/types/MenuSideBar'
+import { menuSidebarProps } from '@/types/menuSideBar'
 
 const MenusSideBar = () => {
     const data: menuSidebarProps[] = [

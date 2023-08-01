@@ -13,13 +13,13 @@ module.exports = {
         extend: {
             backgroundColor: {
                 primary: "var(--bg-primary)",
-                secundary: "var(--bg-secundary)",
+                secondary: "var(--bg-secondary)",
                 hover: "var(--hover-bg)",
                 division: "var(--bg-division)",
             },
             textColor: {
                 primary: "var(--text-primary)",
-                secondary: "var(--text-secundary)",
+                secondary: "var(--text-secondary)",
             },
             fontFamily: {
                 primary: ["Montserrat", "sans-serif"],

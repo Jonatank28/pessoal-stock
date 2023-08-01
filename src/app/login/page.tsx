@@ -19,10 +19,10 @@ const page = () => {
     }
 
     return (
-        <main className="w-screen h-screen flex lp">
+        <main className="w-screen h-screen flex bg-primary">
             <div className=" w-full">{/* <h1>esquerdxa</h1> */}</div>
             <div className=" w-full flex justify-center items-center">
-                <div className=" p-10 bg-primary rounded-lg">
+                <div className=" p-10 bg-secondary rounded-lg">
                     <h1 className="text-xl">Faça login</h1>
                     <form
                         onSubmit={handleSubmit(onSubmit)}
@@ -51,7 +51,11 @@ const page = () => {
                             </p>
                         )}
                         <div className="pt-4">
-                            <Button title="Enviar" />
+                            <Button
+                                title="Enviar"
+                                type="submit"
+                                className="primary w-full"
+                            />
                         </div>
                     </form>
                 </div>

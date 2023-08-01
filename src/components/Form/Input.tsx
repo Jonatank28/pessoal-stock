@@ -1,23 +1,49 @@
+import React, { useState } from 'react'
+
 interface InputProps {
     register: any
     errors: any
     name: string
-    type: string
-    required: boolean
+    type?: string
+    mask?: string
+    required?: boolean
     label: string
     minLength?: number
+    maxLength?: number
 }
 
 const Input: React.FC<InputProps> = ({
     register,
     errors,
     name,
-    type,
+    type = 'string',
     required,
+    mask,
     label,
     minLength,
+    maxLength,
 }) => {
     const hasMinLengthError = errors[name]?.type === 'minLength'
+    const [formattedValue, setFormattedValue] = useState('')
+
+    const applyMask = (value: string) => {
+        if (mask === 'money') {
+            value = value.replace(/\D/g, '')
+            value = (Number(value) / 100).toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+            })
+        }
+        return value
+    }
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value
+        const formattedValue = applyMask(value)
+        setFormattedValue(formattedValue)
+        e.target.value = formattedValue
+        e.currentTarget.dispatchEvent(new Event('input', { bubbles: true }))
+    }
 
     return (
         <div>
@@ -25,11 +51,13 @@ const Input: React.FC<InputProps> = ({
             <input
                 id={name}
                 type={type}
-                maxLength={30}
+                maxLength={maxLength}
                 {...register(name, {
                     required,
                     minLength: minLength || undefined,
                 })}
+                onChange={handleChange}
+                value={formattedValue}
                 className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
             />
             {errors[name] && (
