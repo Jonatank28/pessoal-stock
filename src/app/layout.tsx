@@ -6,6 +6,7 @@ import { Inter } from 'next/font/google'
 import TogleThemes from '@/components/TogleThemes'
 import Sidebar from '@/components/Sidebar'
 import { AuthProvider } from '@/context/auth'
+import { DataInitialProvider } from '@/context/dataInitial'
 import { usePathname } from 'next/navigation'
 import useAuth from '@/hooks/useAuth'
 import Toast from '@/components/Toast'
@@ -38,23 +39,25 @@ export default function RootLayout({
         <html lang="en">
             <body className={inter.className}>
                 <AuthProvider>
-                    <ThemeProvider attribute="class">
-                        <TogleThemes className="absolute right-32 top-6" />
-                        <main
-                            className={`
+                    <DataInitialProvider>
+                        <ThemeProvider attribute="class">
+                            <TogleThemes className="absolute right-32 top-6" />
+                            <main
+                                className={`
                 ${pathName !== '/login' ? 'flex  w-screen h-screen' : ''}
               `}
-                        >
-                            {pathName !== '/login' && <Root />}
-                            <div
-                                className={`
+                            >
+                                {pathName !== '/login' && <Root />}
+                                <div
+                                    className={`
                   ${pathName !== '/login' ? 'flex-1' : ''}
                 `}
-                            >
-                                {children}
-                            </div>
-                        </main>
-                    </ThemeProvider>
+                                >
+                                    {children}
+                                </div>
+                            </main>
+                        </ThemeProvider>
+                    </DataInitialProvider>
                 </AuthProvider>
             </body>
         </html>

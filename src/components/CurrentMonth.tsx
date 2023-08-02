@@ -5,16 +5,11 @@ const CurrentMonth = () => {
     const data = [
         {
             id: 1,
-            month: 'Julho',
-            year: 2023,
-        },
-        {
-            id: 2,
             month: 'Agosto',
             year: 2023,
         },
         {
-            id: 3,
+            id: 2,
             month: 'Setembro',
             year: 2023,
         },

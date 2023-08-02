@@ -40,7 +40,7 @@ const Select: React.FC<SelectProps> = ({
                 ))}
             </select>
             {errors[name] && (
-                <div className="text-red-500 text-sm">Campo obrigatório</div>
+                <div className="text-red-500 text-xs">Campo obrigatório</div>
             )}
         </div>
     )

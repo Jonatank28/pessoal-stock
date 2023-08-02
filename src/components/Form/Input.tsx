@@ -26,7 +26,7 @@ const Input: React.FC<InputProps> = ({
     const hasMinLengthError = errors[name]?.type === 'minLength'
     const [formattedValue, setFormattedValue] = useState('')
 
-    const applyMask = (value: string) => {
+    const applyMaskMoney = (value: string) => {
         if (mask === 'money') {
             value = value.replace(/\D/g, '')
             value = (Number(value) / 100).toLocaleString('pt-BR', {
@@ -39,7 +39,7 @@ const Input: React.FC<InputProps> = ({
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
-        const formattedValue = applyMask(value)
+        const formattedValue = applyMaskMoney(value)
         setFormattedValue(formattedValue)
         e.target.value = formattedValue
         e.currentTarget.dispatchEvent(new Event('input', { bubbles: true }))
@@ -61,7 +61,7 @@ const Input: React.FC<InputProps> = ({
                 className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
             />
             {errors[name] && (
-                <div className="text-red-500 text-sm">
+                <div className="text-red-500 text-xs">
                     {required && errors[name]?.type === 'required'
                         ? 'Campo obrigatório'
                         : hasMinLengthError

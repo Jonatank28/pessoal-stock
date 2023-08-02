@@ -1,41 +1,36 @@
 import IconArrowDown from '@/icon/IconArrowDown'
 import IconArrowUp from '@/icon/IconArrowUp'
 import IconBank from '@/icon/IconBank'
-import IconPigMoney from '@/icon/IconPigMoney'
 import { CardsOptionsProps } from '@/types/cardsOptions'
+import useDataInitial from '@/hooks/useDataInitial'
 
-const Cards = () => {
+const CardsMobills = () => {
+    const { balance } = useDataInitial()
+
     const cards: CardsOptionsProps[] = [
         {
             id: 1,
             title: 'Saldo Atual',
             color: 'blue',
-            value: 6500,
+            value: balance?.currentBalance ?? '0,00',
             icon: <IconBank />,
         },
         {
             id: 2,
             title: 'Receitas',
             color: 'green',
-            value: 4000,
+            value: balance?.revenue ?? '0,00',
             icon: <IconArrowUp />,
         },
         {
             id: 3,
-            value: 2000,
+            value: balance?.expense ?? '0,00',
             color: 'red',
             title: 'Despesas',
             icon: <IconArrowDown />,
-        },
-        {
-            id: 4,
-            value: 12000,
-            color: 'tomato',
-            title: 'Investimentos',
-            icon: <IconPigMoney />,
         },
     ]
     return cards
 }
 
-export default Cards
+export default CardsMobills
