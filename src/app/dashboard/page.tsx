@@ -91,13 +91,13 @@ const Dashboard = () => {
                         ))}
                     </section>
                     <section>
-                        <div className="pt-12">
+                        <div className="pt-12 pb-6">
                             <h1 className="font-bold text-xl">
                                 Últimos registros
                             </h1>
                         </div>
-                        <Table />
                     </section>
+                    <Table />
                 </main>
 
                 {/* Modal ao clicar no botão Novo registro */}

@@ -11,8 +11,8 @@ interface Transaction {
     value: number
     description: string
     creationDate: string
-    typeID: number
-    tagID: number
+    typeID: string
+    tagID: string
 }
 
 interface DataInitial {
@@ -58,11 +58,16 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
                     response.data.balanceGlobal.currentBalance
                 ),
             }
-            const transactions: Transaction[] = response.data.transactions
+            const transactions: Transaction[] = response.data.transactions.map(
+                (row: Transaction) => ({
+                    ...row,
+                    value: formatValue(row.value),
+                })
+            )
 
             setBalance({
-                transactions,
                 balanceGlobal,
+                transactions,
             })
         } catch (error) {
             console.error(error)
