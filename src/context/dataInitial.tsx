@@ -1,17 +1,28 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react'
 import { api } from '@/services/api'
 
-interface FormattedDataInitial {
+interface BalanceGlobal {
     revenue: string
     expense: string
     currentBalance: string
 }
+interface Transaction {
+    transactionID: number
+    value: number
+    description: string
+    creationDate: string
+    typeID: number
+    tagID: number
+}
+
+interface DataInitial {
+    balanceGlobal: BalanceGlobal
+    transactions: Transaction[]
+}
 
 export interface DataInitialContextType {
-    balance: FormattedDataInitial | null
-    setBalance: React.Dispatch<
-        React.SetStateAction<FormattedDataInitial | null>
-    >
+    balance: DataInitial | null
+    setBalance: React.Dispatch<React.SetStateAction<DataInitial | null>>
     getDataInitial: () => void
 }
 
@@ -26,7 +37,7 @@ interface DataInitialProviderProps {
 const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
     children,
 }) => {
-    const [balance, setBalance] = useState<FormattedDataInitial | null>(null)
+    const [balance, setBalance] = useState<DataInitial | null>(null)
 
     // Formata para a moeda pt-br
     const formatValue = (value: number): string => {
@@ -40,12 +51,19 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
     const getDataInitial = async () => {
         try {
             const response = await api.get('dataInitial')
-            const formattedData: FormattedDataInitial = {
-                revenue: formatValue(response.data.revenue),
-                expense: formatValue(response.data.expense),
-                currentBalance: formatValue(response.data.currentBalance),
+            const balanceGlobal: BalanceGlobal = {
+                revenue: formatValue(response.data.balanceGlobal.revenue),
+                expense: formatValue(response.data.balanceGlobal.expense),
+                currentBalance: formatValue(
+                    response.data.balanceGlobal.currentBalance
+                ),
             }
-            setBalance(formattedData)
+            const transactions: Transaction[] = response.data.transactions
+
+            setBalance({
+                transactions,
+                balanceGlobal,
+            })
         } catch (error) {
             console.error(error)
         }
@@ -54,6 +72,8 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
     useEffect(() => {
         getDataInitial()
     }, [])
+
+    console.log('🚀 ~ balance:', balance)
 
     const value: DataInitialContextType = {
         balance,

@@ -15,6 +15,7 @@ import { tipeRegister } from '@/data/typeRegister'
 import { tagRegister } from '@/data/tagRegister'
 import { formatValue } from '@/services/format'
 import { api } from '@/services/api'
+import Table from '@/components/Table'
 
 const Dashboard = () => {
     const cards = Cards()
@@ -89,8 +90,17 @@ const Dashboard = () => {
                             />
                         ))}
                     </section>
+                    <section>
+                        <div className="pt-12">
+                            <h1 className="font-bold text-xl">
+                                Últimos registros
+                            </h1>
+                        </div>
+                        <Table />
+                    </section>
                 </main>
-                {/* Modal ao clicar no botão Novo */}
+
+                {/* Modal ao clicar no botão Novo registro */}
                 <Modal isOpen={openModal} title="Novo registro">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex flex-col gap-2">

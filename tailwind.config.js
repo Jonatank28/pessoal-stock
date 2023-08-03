@@ -16,6 +16,9 @@ module.exports = {
                 secondary: "var(--bg-secondary)",
                 hover: "var(--hover-bg)",
                 division: "var(--bg-division)",
+                tableHeader: "var(--bg-table-header)",
+                tableZ1: "var(--bg-table-z1)",
+                tableZ2: "var(--bg-table-z2)",
             },
             textColor: {
                 primary: "var(--text-primary)",
@@ -25,6 +28,9 @@ module.exports = {
                 primary: ["Montserrat", "sans-serif"],
                 secondary: ["Poppins", "sans-serif"],
             },
+            borderColor: {
+                table: "var(--bg-table-border)"
+            }
         },
     },
     plugins: [],

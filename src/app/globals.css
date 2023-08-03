@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 /* Temas */
+/* Light theme */
 :root {
     --bg-primary: #fff;
     --bg-secondary: #F7F7F7;
@@ -11,8 +12,13 @@
     --background-start-rgb: 180, 180, 180;
     --background-end-rgb: 40, 40, 40;
     --black-80: #080808;
+    --bg-table-header: #dddbdb;
+    --bg-table-border: #dbdada;
+    --bg-table-z1: #f0eded;
+    --bg-table-z2: #f1eaea;
 }
 
+/* Dark theme */
 .dark {
     --bg-primary: #000;
     --bg-secondary: #1A1A1A;
@@ -21,7 +27,12 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 100, 100, 100;
     --black-80: #080808;
+    --bg-table-header: #222;
+    --bg-table-border: #313131;
+    --bg-table-z1: #363636;
+    --bg-table-z2: #4d4c4c;
 }
+
 
 /* Btns */
 .error {
