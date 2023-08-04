@@ -11,8 +11,6 @@ import Modal from '@/components/Modal'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Input from '@/components/Form/Input'
 import Select from '@/components/Form/Select'
-import { tipeRegister } from '@/data/typeRegister'
-import { tagRegister } from '@/data/tagRegister'
 import { formatValue } from '@/services/format'
 import { api } from '@/services/api'
 import Table from '@/components/Table'
@@ -22,7 +20,7 @@ const Dashboard = () => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
     const [openModal, setOpenModal] = useState<boolean>(false)
     const { user, setToast } = useAuth()
-    const { getDataInitial } = useDataInitial()
+    const { getDataInitial, balance } = useDataInitial()
 
     const {
         reset,
@@ -127,7 +125,7 @@ const Dashboard = () => {
                                 required
                                 name="typeID"
                                 label="Tipo"
-                                options={tipeRegister}
+                                options={balance?.types}
                             />
                             <Select
                                 errors={errors}
@@ -135,7 +133,7 @@ const Dashboard = () => {
                                 required
                                 name="tagID"
                                 label="Tag"
-                                options={tagRegister}
+                                options={balance?.tags}
                             />
                         </div>
                         <div className="flex items-center gap-4 mt-6">

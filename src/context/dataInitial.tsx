@@ -1,3 +1,4 @@
+'use client'
 import React, { createContext, useState, useEffect, ReactNode } from 'react'
 import { api } from '@/services/api'
 
@@ -15,9 +16,21 @@ interface Transaction {
     tagID: string
 }
 
+interface type {
+    id: number
+    name: string
+}
+
+interface tag {
+    id: number
+    name: string
+}
+
 interface DataInitial {
-    balanceGlobal: BalanceGlobal
+    balanceGlobal: BalanceGlobal | null
     transactions: Transaction[]
+    tags: tag[]
+    types: type[]
 }
 
 export interface DataInitialContextType {
@@ -51,13 +64,18 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
     const getDataInitial = async () => {
         try {
             const response = await api.get('dataInitial')
-            const balanceGlobal: BalanceGlobal = {
-                revenue: formatValue(response.data.balanceGlobal.revenue),
-                expense: formatValue(response.data.balanceGlobal.expense),
-                currentBalance: formatValue(
-                    response.data.balanceGlobal.currentBalance
-                ),
-            }
+
+            const balanceGlobal: BalanceGlobal | null = response.data
+                .balanceGlobal
+                ? {
+                      revenue: formatValue(response.data.balanceGlobal.revenue),
+                      expense: formatValue(response.data.balanceGlobal.expense),
+                      currentBalance: formatValue(
+                          response.data.balanceGlobal.currentBalance
+                      ),
+                  }
+                : null
+
             const transactions: Transaction[] = response.data.transactions.map(
                 (row: Transaction) => ({
                     ...row,
@@ -65,20 +83,23 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
                 })
             )
 
+            const tags: tag[] = response.data.tags
+            const types: type[] = response.data.types
+
             setBalance({
                 balanceGlobal,
                 transactions,
+                tags,
+                types,
             })
-        } catch (error) {
-            console.error(error)
+        } catch (err) {
+            console.error(err)
         }
     }
 
     useEffect(() => {
         getDataInitial()
     }, [])
-
-    console.log('🚀 ~ balance:', balance)
 
     const value: DataInitialContextType = {
         balance,
