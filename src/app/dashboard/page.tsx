@@ -29,12 +29,14 @@ const Dashboard = () => {
         formState: { errors },
     } = useForm<FormData>()
 
+    //! Cadastra nova transação
     const onSubmit: SubmitHandler<FormData> = async (values) => {
         // @ts-ignore
         const value = formatValue(values.value)
         const data = {
             ...values,
             value: value,
+            userID: user?.userID,
         }
         try {
             const response = await api.post('transaction/new', data)
@@ -54,6 +56,9 @@ const Dashboard = () => {
             console.error(error)
         }
     }
+
+    const editTransaction = (id: number) => {}
+    const deleteTransaction = (id: number) => {}
 
     return (
         user && (
@@ -95,7 +100,10 @@ const Dashboard = () => {
                             </h1>
                         </div>
                     </section>
-                    <Table />
+                    <Table
+                        editTransaction={editTransaction}
+                        deleteTransaction={deleteTransaction}
+                    />
                 </main>
 
                 {/* Modal ao clicar no botão Novo registro */}

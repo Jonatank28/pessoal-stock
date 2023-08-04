@@ -1,6 +1,11 @@
 import useDataInitial from '@/hooks/useDataInitial'
 
-const Table = () => {
+interface Props {
+    editTransaction: (id: number) => void
+    deleteTransaction: (id: number) => void
+}
+
+const Table = ({ editTransaction, deleteTransaction }: Props) => {
     const { balance } = useDataInitial()
 
     const dataHeader = ['ID', 'Descrição', 'Valor', 'Tipo', 'Tag', 'Ações']
@@ -49,20 +54,10 @@ const Table = () => {
                                     {transaction.tagID}
                                 </td>
                                 <td className="border border-table px-6 py-3 w-[4%]">
-                                    <span
-                                        role="img"
-                                        aria-label="editar"
-                                        className="cursor-pointer mr-2"
-                                    >
+                                    <span className="cursor-pointer mr-2">
                                         ✏️
                                     </span>
-                                    <span
-                                        role="img"
-                                        aria-label="deletar"
-                                        className="cursor-pointer"
-                                    >
-                                        ❌
-                                    </span>
+                                    <span className="cursor-pointer">❌</span>
                                 </td>
                             </tr>
                         ))}

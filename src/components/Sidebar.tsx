@@ -25,7 +25,7 @@ const Sidebar = () => {
                             key={menu.id}
                             className={`p-2 rounded-lg cursor-pointer ${
                                 menuActive === menu.id
-                                    ? 'bg-primary shadow-lg shadow-[var(--decoration)]'
+                                    ? 'bg-primary shadow-sm shadow-[var(--decoration)]'
                                     : 'bg-primary'
                             }`}
                             onClick={() =>

@@ -1,6 +1,7 @@
 'use client'
 import React, { createContext, useState, useEffect, ReactNode } from 'react'
 import { api } from '@/services/api'
+import useAuth from '@/hooks/useAuth'
 
 interface BalanceGlobal {
     revenue: string
@@ -51,6 +52,7 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
     children,
 }) => {
     const [balance, setBalance] = useState<DataInitial | null>(null)
+    const { user } = useAuth()
 
     // Formata para a moeda pt-br
     const formatValue = (value: number): string => {
@@ -63,8 +65,7 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
     // Requisição ao back para buscar dados atualizados sobre o balanço de caixa
     const getDataInitial = async () => {
         try {
-            const response = await api.get('dataInitial')
-
+            const response = await api.post('dataInitial', { data: user })
             const balanceGlobal: BalanceGlobal | null = response.data
                 .balanceGlobal
                 ? {
@@ -98,8 +99,10 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
     }
 
     useEffect(() => {
-        getDataInitial()
-    }, [])
+        if (user) {
+            getDataInitial()
+        }
+    }, [user])
 
     const value: DataInitialContextType = {
         balance,

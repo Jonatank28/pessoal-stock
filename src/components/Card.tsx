@@ -8,9 +8,9 @@ const Card = ({ id, title, value, color, icon }: CardsOptionsProps) => {
         ${
             id === 1
                 ? parseInt(value) < 0
-                    ? 'bg-red-600/5 shadow-red-800 shadow-sm'
+                    ? 'bg-red-600/5 shadow-red-800/70 shadow-sm'
                     : parseInt(value) > 0
-                    ? 'bg-green-600/5 shadow-green-800 shadow-sm'
+                    ? 'bg-green-600/5 shadow-green-800/70 shadow-sm'
                     : ''
                 : ''
         }
