@@ -1,14 +1,28 @@
+import { modalDelete, modalEdit } from '@/app/dashboard/page'
 import useDataInitial from '@/hooks/useDataInitial'
 
 interface Props {
-    editTransaction: (id: number) => void
-    deleteTransaction: (id: number) => void
+    setOpenModalEdit: React.Dispatch<React.SetStateAction<modalEdit | null>>
+    setOpenModalDelete: React.Dispatch<React.SetStateAction<modalDelete | null>>
 }
 
-const Table = ({ editTransaction, deleteTransaction }: Props) => {
+const Table = ({ setOpenModalEdit, setOpenModalDelete }: Props) => {
     const { balance } = useDataInitial()
-
     const dataHeader = ['ID', 'Descrição', 'Valor', 'Tipo', 'Tag', 'Ações']
+
+    const editTransaction = (id: number) => {
+        setOpenModalEdit({
+            status: true,
+            id: id,
+        })
+    }
+
+    const deleteTransaction = (id: number) => {
+        setOpenModalDelete({
+            status: true,
+            id: id,
+        })
+    }
 
     return (
         <div className="w-full py-2 ">

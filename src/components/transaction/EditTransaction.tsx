@@ -7,15 +7,18 @@ import { formatValue } from '@/services/format'
 import { api } from '@/services/api'
 import useAuth from '@/hooks/useAuth'
 import useDataInitial from '@/hooks/useDataInitial'
+import { modalEdit } from '@/app/dashboard/page'
 
 interface Props {
-    openModal: boolean
-    setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
+    openModalEdit: modalEdit | any
+    setOpenModalEdit: React.Dispatch<React.SetStateAction<modalEdit | null>>
 }
 
-const NewTransaction = ({ setOpenModal, openModal }: Props) => {
+const EditTransaction = ({ openModalEdit, setOpenModalEdit }: Props) => {
     const { user, setToast } = useAuth()
     const { getDataInitial, balance } = useDataInitial()
+
+    console.log('idddddd', openModalEdit)
 
     const {
         reset,
@@ -25,34 +28,12 @@ const NewTransaction = ({ setOpenModal, openModal }: Props) => {
     } = useForm<FormData>()
 
     //! Cadastra nova transação
-    const onSubmit: SubmitHandler<FormData> = async (values) => {
-        // @ts-ignore
-        const value = formatValue(values.value)
-        const data = {
-            ...values,
-            value: value,
-            userID: user?.userID,
-        }
-        try {
-            const response = await api.post('transaction/new', data)
-            if (response.status == 201) {
-                setToast({
-                    status: true,
-                    message: response.data.message,
-                })
-                getDataInitial()
-                setOpenModal(false)
-                reset()
-                setTimeout(() => {
-                    setToast(null)
-                }, 2000)
-            }
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    const onSubmit: SubmitHandler<FormData> = async (values) => {}
     return (
-        <Modal isOpen={openModal} title="Novo registro">
+        <Modal
+            isOpen={openModalEdit?.status}
+            title={`Editar registro ${openModalEdit?.id}`}
+        >
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col gap-2">
                     <Input
@@ -95,7 +76,7 @@ const NewTransaction = ({ setOpenModal, openModal }: Props) => {
                         title="Cancelar"
                         type="button"
                         onClick={() => {
-                            setOpenModal(false)
+                            setOpenModalEdit(null)
                             reset()
                         }}
                     />
@@ -110,4 +91,4 @@ const NewTransaction = ({ setOpenModal, openModal }: Props) => {
     )
 }
 
-export default NewTransaction
+export default EditTransaction

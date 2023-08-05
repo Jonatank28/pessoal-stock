@@ -3,66 +3,31 @@ import Card from '@/components/Card'
 import Cards from '@/data/CardsMobills'
 import { useState } from 'react'
 import useAuth from '@/hooks/useAuth'
-import useDataInitial from '@/hooks/useDataInitial'
 import CurrentMonth from '@/components/CurrentMonth'
 import UserOptions from '@/components/UserOptions'
 import Button from '@/components/Form/Button'
-import Modal from '@/components/Modal'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import Input from '@/components/Form/Input'
-import Select from '@/components/Form/Select'
-import { formatValue } from '@/services/format'
-import { api } from '@/services/api'
 import Table from '@/components/Table'
+import NewTransaction from '@/components/transaction/NewTransaction'
+import EditTransaction from '@/components/transaction/EditTransaction'
+
+export interface modalEdit {
+    status: boolean
+    id: number
+}
+export interface modalDelete {
+    status: boolean
+    id: number
+}
 
 const Dashboard = () => {
     const cards = Cards()
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
-    const [openModal, setOpenModal] = useState<boolean>(false)
-    const { user, setToast } = useAuth()
-    const { getDataInitial, balance } = useDataInitial()
-
-    const {
-        reset,
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<FormData>()
-
-    //! Cadastra nova transação
-    const onSubmit: SubmitHandler<FormData> = async (values) => {
-        // @ts-ignore
-        const value = formatValue(values.value)
-        const data = {
-            ...values,
-            value: value,
-            userID: user?.userID,
-        }
-        try {
-            const response = await api.post('transaction/new', data)
-            if (response.status == 201) {
-                setToast({
-                    status: true,
-                    message: response.data.message,
-                })
-                getDataInitial()
-                setOpenModal(false)
-                reset()
-                setTimeout(() => {
-                    setToast(null)
-                }, 2000)
-            }
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
-    const editTransaction = (id: number) => {
-        console.log('Edit', id)
-    }
-    const deleteTransaction = (id: number) => {
-        console.log('Delete', id)
-    }
+    const [openModalNew, setOpenModalNew] = useState<boolean>(false)
+    const [openModalEdit, setOpenModalEdit] = useState<modalEdit | null>(null)
+    const [openModalDelete, setOpenModalDelete] = useState<modalDelete | null>(
+        null
+    )
+    const { user } = useAuth()
 
     return (
         user && (
@@ -72,7 +37,7 @@ const Dashboard = () => {
                         title="Novo registro"
                         className="fixed bottom-4 right-4 w-auto primary"
                         type="button"
-                        onClick={() => setOpenModal(true)}
+                        onClick={() => setOpenModalNew(true)}
                     />
                     <div className="flex justify-between">
                         <div></div>
@@ -85,8 +50,9 @@ const Dashboard = () => {
                     <div className="pt-6">
                         <h1 className="font-bold text-xl">Dashboard</h1>
                     </div>
+                    {/* Cards do header que contem o balanço atual */}
                     <section className="grid grid-cols-3 pt-6 gap-4">
-                        {cards.map((card, index) => (
+                        {cards.map((card) => (
                             <Card
                                 key={card.id}
                                 title={card.title}
@@ -104,68 +70,22 @@ const Dashboard = () => {
                             </h1>
                         </div>
                     </section>
+                    {/* Tabela com os registros */}
                     <Table
-                        editTransaction={editTransaction}
-                        deleteTransaction={deleteTransaction}
+                        setOpenModalEdit={setOpenModalEdit}
+                        setOpenModalDelete={setOpenModalDelete}
                     />
                 </main>
-
-                {/* Modal ao clicar no botão Novo registro */}
-                <Modal isOpen={openModal} title="Novo registro">
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="flex flex-col gap-2">
-                            <Input
-                                errors={errors}
-                                register={register}
-                                required
-                                mask="money"
-                                name="value"
-                                label="Valor"
-                                maxLength={14}
-                            />
-                            <Input
-                                errors={errors}
-                                register={register}
-                                required
-                                type="string"
-                                name="description"
-                                label="Descrição"
-                            />
-                            <Select
-                                errors={errors}
-                                register={register}
-                                required
-                                name="typeID"
-                                label="Tipo"
-                                options={balance?.types}
-                            />
-                            <Select
-                                errors={errors}
-                                register={register}
-                                required
-                                name="tagID"
-                                label="Tag"
-                                options={balance?.tags}
-                            />
-                        </div>
-                        <div className="flex items-center gap-4 mt-6">
-                            <Button
-                                className="w-full error"
-                                title="Cancelar"
-                                type="button"
-                                onClick={() => {
-                                    setOpenModal(false)
-                                    reset()
-                                }}
-                            />
-                            <Button
-                                className="w-full success"
-                                title="Salvar"
-                                type="submit"
-                            />
-                        </div>
-                    </form>
-                </Modal>
+                {/* Abre modal para registrar nova transação */}
+                <NewTransaction
+                    openModal={openModalNew}
+                    setOpenModal={setOpenModalNew}
+                />
+                {/* Abre modal para  editar registro */}
+                <EditTransaction
+                    openModalEdit={openModalEdit}
+                    setOpenModalEdit={setOpenModalEdit}
+                />
             </>
         )
     )
