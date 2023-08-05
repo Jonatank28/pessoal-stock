@@ -50,7 +50,11 @@ export default function RootLayout({
                                 {pathName !== '/login' && <Root />}
                                 <div
                                     className={`
-                  ${pathName !== '/login' ? 'flex-1' : ''}
+                  ${
+                      pathName !== '/login'
+                          ? 'flex-1 overflow-x-hidden pl-60'
+                          : ''
+                  }
                 `}
                                 >
                                     {children}

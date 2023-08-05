@@ -57,13 +57,17 @@ const Dashboard = () => {
         }
     }
 
-    const editTransaction = (id: number) => {}
-    const deleteTransaction = (id: number) => {}
+    const editTransaction = (id: number) => {
+        console.log('Edit', id)
+    }
+    const deleteTransaction = (id: number) => {
+        console.log('Delete', id)
+    }
 
     return (
         user && (
             <>
-                <main className="p-4 pl-12 lp w-full h-full">
+                <main className="p-4 pl-12">
                     <Button
                         title="Novo registro"
                         className="fixed bottom-4 right-4 w-auto primary"
