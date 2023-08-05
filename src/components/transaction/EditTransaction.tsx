@@ -8,6 +8,7 @@ import { api } from '@/services/api'
 import useAuth from '@/hooks/useAuth'
 import useDataInitial from '@/hooks/useDataInitial'
 import { modalEdit } from '@/app/dashboard/page'
+import { useEffect } from 'react'
 
 interface Props {
     openModalEdit: modalEdit | any
@@ -17,8 +18,7 @@ interface Props {
 const EditTransaction = ({ openModalEdit, setOpenModalEdit }: Props) => {
     const { user, setToast } = useAuth()
     const { getDataInitial, balance } = useDataInitial()
-
-    console.log('idddddd', openModalEdit)
+    const id = openModalEdit?.id
 
     const {
         reset,
@@ -27,8 +27,21 @@ const EditTransaction = ({ openModalEdit, setOpenModalEdit }: Props) => {
         formState: { errors },
     } = useForm<FormData>()
 
-    //! Cadastra nova transação
+    const getData = async () => {
+        try {
+            const response = await api.get(`transaction/getData/${id}`)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    //! Edita a transação
     const onSubmit: SubmitHandler<FormData> = async (values) => {}
+
+    useEffect(() => {
+        getData()
+    }, [])
+
     return (
         <Modal
             isOpen={openModalEdit?.status}

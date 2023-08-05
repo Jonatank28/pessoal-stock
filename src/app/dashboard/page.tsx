@@ -9,6 +9,7 @@ import Button from '@/components/Form/Button'
 import Table from '@/components/Table'
 import NewTransaction from '@/components/transaction/NewTransaction'
 import EditTransaction from '@/components/transaction/EditTransaction'
+import DeleteTransaction from '@/components/transaction/DeleteTransaction'
 
 export interface modalEdit {
     status: boolean
@@ -70,22 +71,34 @@ const Dashboard = () => {
                             </h1>
                         </div>
                     </section>
-                    {/* Tabela com os registros */}
+                    {/* Tabela com os registros de transação*/}
                     <Table
                         setOpenModalEdit={setOpenModalEdit}
                         setOpenModalDelete={setOpenModalDelete}
                     />
                 </main>
+
                 {/* Abre modal para registrar nova transação */}
-                <NewTransaction
-                    openModal={openModalNew}
-                    setOpenModal={setOpenModalNew}
-                />
+                {openModalNew && (
+                    <NewTransaction
+                        openModal={openModalNew}
+                        setOpenModal={setOpenModalNew}
+                    />
+                )}
                 {/* Abre modal para  editar registro */}
-                <EditTransaction
-                    openModalEdit={openModalEdit}
-                    setOpenModalEdit={setOpenModalEdit}
-                />
+                {openModalEdit?.status && (
+                    <EditTransaction
+                        openModalEdit={openModalEdit}
+                        setOpenModalEdit={setOpenModalEdit}
+                    />
+                )}
+                {/* Abre modal para confirmar se deseja excluir registro */}
+                {openModalDelete?.status && (
+                    <DeleteTransaction
+                        openModalDelete={openModalDelete}
+                        setOpenModalDelete={setOpenModalDelete}
+                    />
+                )}
             </>
         )
     )
