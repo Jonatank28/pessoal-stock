@@ -10,8 +10,8 @@ const MenusSideBar = () => {
         },
         {
             id: 2,
-            title: 'Cadastros',
-            route: 'cadastros',
+            title: 'Gráficos',
+            route: 'graficos',
         },
         {
             id: 3,

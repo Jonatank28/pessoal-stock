@@ -1,5 +1,6 @@
 import IconThreeDots from '@/icon/IconThreeDots'
 import useAuth from '@/hooks/useAuth'
+import TogleThemes from './TogleThemes'
 
 interface Props {
     menuOpen: boolean
@@ -10,6 +11,7 @@ const UserOptions = ({ menuOpen, setMenuOpen }: Props) => {
     const { logout } = useAuth()
     return (
         <div className="flex items-center px-4 py-1 gap-4">
+            <TogleThemes className="" />
             <img
                 className="w-6 h-6 rounded-full"
                 src="https://github.com/Jonatank28.png"

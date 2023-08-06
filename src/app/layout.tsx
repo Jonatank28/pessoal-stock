@@ -3,7 +3,6 @@ import './globals.css'
 import { ThemeProvider } from 'next-themes'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import TogleThemes from '@/components/TogleThemes'
 import Sidebar from '@/components/Sidebar'
 import { AuthProvider } from '@/context/auth'
 import { DataInitialProvider } from '@/context/dataInitial'
@@ -41,7 +40,6 @@ export default function RootLayout({
                 <AuthProvider>
                     <DataInitialProvider>
                         <ThemeProvider attribute="class">
-                            <TogleThemes className="absolute right-32 top-6" />
                             <main
                                 className={`
                 ${pathName !== '/login' ? 'flex  w-screen h-screen' : ''}

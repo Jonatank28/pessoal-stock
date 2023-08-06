@@ -8,10 +8,11 @@ interface BalanceGlobal {
     expense: string
     currentBalance: string
 }
-interface Transaction {
+export interface Transaction {
     transactionID: number
     value: number
     description: string
+    day_date: string
     creationDate: string
     typeID: string
     tagID: string
@@ -29,7 +30,7 @@ interface tag {
 
 interface DataInitial {
     balanceGlobal: BalanceGlobal | null
-    transactions: Transaction[]
+    transactions: Transaction[] | null
     tags: tag[]
     types: type[]
 }

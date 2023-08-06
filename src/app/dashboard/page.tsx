@@ -36,7 +36,7 @@ const Dashboard = () => {
                 <main className="p-4 pl-12">
                     <Button
                         title="Novo registro"
-                        className="fixed bottom-4 right-4 w-auto primary"
+                        className="fixed bottom-4 right-6 w-auto primary"
                         type="button"
                         onClick={() => setOpenModalNew(true)}
                     />
@@ -66,9 +66,7 @@ const Dashboard = () => {
                     </section>
                     <section>
                         <div className="pt-12 pb-6">
-                            <h1 className="font-bold text-xl">
-                                Últimos registros
-                            </h1>
+                            <h1 className="font-bold text-xl">Registros</h1>
                         </div>
                     </section>
                     {/* Tabela com os registros de transação*/}
