@@ -10,6 +10,7 @@ const Table = ({ setOpenModalEdit, setOpenModalDelete }: Props) => {
     const { balance } = useDataInitial()
     const dataHeader = ['ID', 'Descrição', 'Valor', 'Tipo', 'Tag', 'Ações']
 
+    console.log('🚀 ~ balance:', balance)
     const editTransaction = (id: number) => {
         setOpenModalEdit({
             status: true,

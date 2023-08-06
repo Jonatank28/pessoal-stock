@@ -24,6 +24,15 @@ const page = () => {
             <div className=" w-full flex justify-center items-center">
                 <div className=" p-10 bg-secondary rounded-lg">
                     <h1 className="text-xl">Faça login</h1>
+                    <div className="bg-primary rounded-lg p-2 mt-4">
+                        <h2 className="text-lg pb-2">Usuário convidado</h2>
+                        <p className="text-sm">
+                            Email: <span>client@gmail.com</span>
+                        </p>
+                        <p className="text-sm">
+                            Senha: <span>1234</span>
+                        </p>
+                    </div>
                     <form
                         onSubmit={handleSubmit(onSubmit)}
                         className="pt-6 flex flex-col gap-4 w-[300px]"
@@ -52,7 +61,7 @@ const page = () => {
                         )}
                         <div className="pt-4">
                             <Button
-                                title="Enviar"
+                                title="Entrar"
                                 type="submit"
                                 className="primary w-full"
                             />

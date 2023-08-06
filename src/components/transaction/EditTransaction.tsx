@@ -27,16 +27,57 @@ const EditTransaction = ({ openModalEdit, setOpenModalEdit }: Props) => {
         formState: { errors },
     } = useForm<FormData>()
 
+    // Formata para a moeda pt-br
+    const applyMaskMoney = (value: string) => {
+        value = value.replace(/\D/g, '')
+        value = (Number(value) / 100).toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        })
+        return value
+    }
+
     const getData = async () => {
         try {
             const response = await api.get(`transaction/getData/${id}`)
+            const valueFormat = response.data.value.toString()
+            const formatData = {
+                ...response.data,
+                value: applyMaskMoney(valueFormat),
+            }
+            reset(formatData)
         } catch (error) {
             console.log(error)
         }
     }
 
     //! Edita a transação
-    const onSubmit: SubmitHandler<FormData> = async (values) => {}
+    const onSubmit: SubmitHandler<FormData> = async (values) => {
+        const formatData = {
+            ...values,
+            userID: user?.userID,
+            // @ts-ignore
+            value: formatValue(values.value),
+        }
+        const data = formatData
+        const response = await api.put(`transaction/update`, data)
+        if (response.status == 201) {
+            setToast({
+                status: true,
+                message: response.data.message,
+            })
+            getDataInitial()
+            setOpenModalEdit(null)
+            reset()
+            setTimeout(() => {
+                setToast(null)
+            }, 2000)
+        }
+        try {
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         getData()
