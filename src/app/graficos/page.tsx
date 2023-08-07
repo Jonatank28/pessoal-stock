@@ -1,8 +1,8 @@
 'use client'
-import PieChart from '@/components/chart/PieChart'
 import { api } from '@/services/api'
 import { useEffect, useState } from 'react'
 import useAuth from '@/hooks/useAuth'
+import PieChart from '@/components/chart/PieChart'
 
 export interface chartPie {
     tag: string
@@ -39,7 +39,10 @@ const Page = () => {
         <main className="p-8">
             <h1 className="font-bold text-xl">Gráficos</h1>
             {chartData ? (
-                <PieChart data={chartData.chartPie} />
+                <div className=" bg-black/80 p-3 rounded-lg mt-4">
+                    <h2 className="text-lg text-primary">Por tag</h2>
+                    <PieChart data={chartData.chartPie} />
+                </div>
             ) : (
                 <div>Loading...</div>
             )}

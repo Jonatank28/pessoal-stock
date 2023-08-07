@@ -13,11 +13,6 @@ const MenusSideBar = () => {
             title: 'Gráficos',
             route: 'graficos',
         },
-        {
-            id: 3,
-            title: 'LP',
-            route: 'lp',
-        },
     ]
     return data
 }

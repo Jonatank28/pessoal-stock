@@ -22,6 +22,10 @@ const Select: React.FC<SelectProps> = ({
     required,
     label,
 }) => {
+    const sortedOptions = options
+        ?.slice()
+        .sort((a, b) => a.name.localeCompare(b.name))
+
     return (
         <div>
             <label htmlFor={name}>{label}</label>
@@ -33,7 +37,7 @@ const Select: React.FC<SelectProps> = ({
                 <option value="" disabled selected>
                     Selecione
                 </option>
-                {options?.map((option: options) => (
+                {sortedOptions?.map((option: options) => (
                     <option value={option.id} key={option.id}>
                         {option.name}
                     </option>

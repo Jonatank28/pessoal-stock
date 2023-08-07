@@ -9,6 +9,7 @@ import useAuth from '@/hooks/useAuth'
 import useDataInitial from '@/hooks/useDataInitial'
 import { modalEdit } from '@/app/dashboard/page'
 import { useEffect } from 'react'
+import DateInput from '../Form/Date'
 
 interface Props {
     openModalEdit: modalEdit | any
@@ -41,8 +42,19 @@ const EditTransaction = ({ openModalEdit, setOpenModalEdit }: Props) => {
         try {
             const response = await api.get(`transaction/getData/${id}`)
             const valueFormat = response.data.value.toString()
+            const dateObj = new Date(response.data.updateDate)
+            const formattedDate = `${dateObj.getFullYear()}-${(
+                dateObj.getMonth() + 1
+            )
+                .toString()
+                .padStart(2, '0')}-${dateObj
+                .getDate()
+                .toString()
+                .padStart(2, '0')}`
+
             const formatData = {
                 ...response.data,
+                updateDate: formattedDate,
                 value: applyMaskMoney(valueFormat),
             }
             reset(formatData)
@@ -106,6 +118,13 @@ const EditTransaction = ({ openModalEdit, setOpenModalEdit }: Props) => {
                         type="string"
                         name="description"
                         label="Descrição"
+                    />
+                    <DateInput
+                        errors={errors}
+                        register={register}
+                        name="updateDate"
+                        required
+                        label="Data:"
                     />
                     <Select
                         errors={errors}

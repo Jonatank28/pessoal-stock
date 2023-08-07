@@ -7,6 +7,7 @@ import { formatValue } from '@/services/format'
 import { api } from '@/services/api'
 import useAuth from '@/hooks/useAuth'
 import useDataInitial from '@/hooks/useDataInitial'
+import DateInput from '../Form/Date'
 
 interface Props {
     openModal: boolean
@@ -71,6 +72,13 @@ const NewTransaction = ({ setOpenModal, openModal }: Props) => {
                         type="string"
                         name="description"
                         label="Descrição"
+                    />
+                    <DateInput
+                        errors={errors}
+                        register={register}
+                        name="updateDate"
+                        required
+                        label="Data:"
                     />
                     <Select
                         errors={errors}

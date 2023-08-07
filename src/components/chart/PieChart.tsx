@@ -57,16 +57,13 @@ const PieChart = ({ data }: PieChartProps) => {
     return (
         isDataLoaded &&
         chartData && (
-            <div className=" bg-black/30 p-3 rounded-lg mt-4">
-                <h2 className="text-lg">Por tag</h2>
-                <ReactApexChart
-                    options={chartData.options as ApexCharts.ApexOptions}
-                    series={chartData.series}
-                    type="pie"
-                    width={500}
-                    height={500}
-                />
-            </div>
+            <ReactApexChart
+                options={chartData.options as ApexCharts.ApexOptions}
+                series={chartData.series}
+                type="pie"
+                width={500}
+                height={500}
+            />
         )
     )
 }
