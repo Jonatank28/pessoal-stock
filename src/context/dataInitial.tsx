@@ -1,4 +1,3 @@
-'use client'
 import React, { createContext, useState, useEffect, ReactNode } from 'react'
 import { api } from '@/services/api'
 import useAuth from '@/hooks/useAuth'
@@ -8,31 +7,31 @@ interface BalanceGlobal {
     expense: string
     currentBalance: string
 }
+
 export interface Transaction {
     transactionID: number
-    value: number
     description: string
     day_date: string
-    creationDate: string
-    typeID: string
+    value: number
     tagID: string
+    typeID: string
 }
 
-interface type {
+interface Tag {
     id: number
     name: string
 }
 
-interface tag {
+interface Type {
     id: number
     name: string
 }
 
 interface DataInitial {
     balanceGlobal: BalanceGlobal | null
-    transactions: Transaction[] | null
-    tags: tag[]
-    types: type[]
+    transactions: { [key: string]: Transaction[] } | null // Agrupadas por datas
+    tags: Tag[]
+    types: Type[]
 }
 
 export interface DataInitialContextType {
@@ -55,15 +54,13 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
     const [balance, setBalance] = useState<DataInitial | null>(null)
     const { user } = useAuth()
 
-    // Formata para a moeda pt-br
     const formatValue = (value: number): string => {
-        return value.toLocaleString('pt-BR', {
+        return new Intl.NumberFormat('pt-BR', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
-        })
+        }).format(value)
     }
 
-    // Requisição ao back para buscar dados atualizados sobre o balanço de caixa
     const getDataInitial = async () => {
         try {
             const response = await api.post('dataInitial', { data: user })
@@ -78,15 +75,11 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
                   }
                 : null
 
-            const transactions: Transaction[] = response.data.transactions.map(
-                (row: Transaction) => ({
-                    ...row,
-                    value: formatValue(row.value),
-                })
-            )
+            const transactions: { [key: string]: Transaction[] } =
+                response.data.transactions
 
-            const tags: tag[] = response.data.tags
-            const types: type[] = response.data.types
+            const tags: Tag[] = response.data.tags
+            const types: Type[] = response.data.types
 
             setBalance({
                 balanceGlobal,

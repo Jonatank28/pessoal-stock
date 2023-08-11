@@ -10,6 +10,7 @@ interface Props {
 
 const Table: React.FC<Props> = ({ setOpenModalEdit, setOpenModalDelete }) => {
     const { balance } = useDataInitial()
+    console.log('🚀 ~ balance:', balance)
     const dataHeader = ['ID', 'Descrição', 'Valor', 'Tipo', 'Tag', 'Ações']
 
     const editTransaction = (id: number) => {
@@ -70,7 +71,32 @@ const Table: React.FC<Props> = ({ setOpenModalEdit, setOpenModalDelete }) => {
                                             colSpan={6}
                                             className="border border-table px-6 py-3 bg-primary"
                                         >
-                                            {day_date}
+                                            <div className="flex items-center gap-2">
+                                                <div>
+                                                    <span>{day_date}</span>
+                                                </div>
+                                                <div className="h-[20px] border " />
+                                                <div className="text-green-400/60">
+                                                    <span>
+                                                        Entradas:{' '}
+                                                        <span>R$: 25,00</span>
+                                                    </span>
+                                                </div>
+                                                <div className="h-[20px] border " />
+                                                <div className="text-red-400/60">
+                                                    <span>
+                                                        Saidas:{' '}
+                                                        <span>R$: 37,00 </span>
+                                                    </span>
+                                                </div>
+                                                <div className="h-[20px] border " />
+                                                <div className="text-blue-400/60">
+                                                    <span>
+                                                        Total:{' '}
+                                                        <span>R$: -12,00 </span>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     {transactions.map(
