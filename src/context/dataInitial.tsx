@@ -8,7 +8,7 @@ interface BalanceGlobal {
     currentBalance: string
 }
 
-export interface Transaction {
+interface Transaction {
     transactionID: number
     description: string
     day_date: string
@@ -27,9 +27,17 @@ interface Type {
     name: string
 }
 
+export interface TransactionsGroup {
+    day: string
+    revenue: string
+    expense: string
+    currentBalance: string
+    transactions: Transaction[]
+}
+
 interface DataInitial {
     balanceGlobal: BalanceGlobal | null
-    transactions: { [key: string]: Transaction[] } | null // Agrupadas por datas
+    transactionsGroup: TransactionsGroup | null
     tags: Tag[]
     types: Type[]
 }
@@ -75,15 +83,15 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
                   }
                 : null
 
-            const transactions: { [key: string]: Transaction[] } =
-                response.data.transactions
+            const transactionsGroup: TransactionsGroup =
+                response.data.transactionsGroup
 
             const tags: Tag[] = response.data.tags
             const types: Type[] = response.data.types
 
             setBalance({
                 balanceGlobal,
-                transactions,
+                transactionsGroup,
                 tags,
                 types,
             })

@@ -1,7 +1,7 @@
 import React from 'react'
 import { modalDelete, modalEdit } from '@/app/dashboard/page'
 import useDataInitial from '@/hooks/useDataInitial'
-import { Transaction } from '@/context/dataInitial'
+import { TransactionsGroup } from '@/context/dataInitial'
 
 interface Props {
     setOpenModalEdit: React.Dispatch<React.SetStateAction<modalEdit | null>>
@@ -10,7 +10,6 @@ interface Props {
 
 const Table: React.FC<Props> = ({ setOpenModalEdit, setOpenModalDelete }) => {
     const { balance } = useDataInitial()
-    console.log('🚀 ~ balance:', balance)
     const dataHeader = ['ID', 'Descrição', 'Valor', 'Tipo', 'Tag', 'Ações']
 
     const editTransaction = (id: number) => {
@@ -26,25 +25,6 @@ const Table: React.FC<Props> = ({ setOpenModalEdit, setOpenModalDelete }) => {
             id: id,
         })
     }
-
-    // Função para agrupar as transações por day_date
-    const groupTransactionsByDate = (transactions: Transaction[]) => {
-        const transactionsByDate: { [key: string]: Transaction[] } = {}
-
-        transactions.forEach((transaction) => {
-            const { day_date } = transaction
-            if (!transactionsByDate[day_date]) {
-                transactionsByDate[day_date] = []
-            }
-            transactionsByDate[day_date].push(transaction)
-        })
-
-        return transactionsByDate
-    }
-
-    const transactionsByDate = groupTransactionsByDate(
-        balance?.transactions || []
-    )
 
     return (
         <div className="w-full py-2">
@@ -63,9 +43,10 @@ const Table: React.FC<Props> = ({ setOpenModalEdit, setOpenModalDelete }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {Object.entries(transactionsByDate).map(
-                            ([day_date, transactions], index) => (
-                                <React.Fragment key={day_date}>
+                        {/* @ts-ignore */}
+                        {balance?.transactionsGroup?.map(
+                            (transaction: TransactionsGroup, index: any) => (
+                                <React.Fragment key={index}>
                                     <tr className="bg-tableZ1">
                                         <td
                                             colSpan={6}
@@ -73,7 +54,9 @@ const Table: React.FC<Props> = ({ setOpenModalEdit, setOpenModalDelete }) => {
                                         >
                                             <div className="flex items-center gap-2">
                                                 <div>
-                                                    <span>{day_date}</span>
+                                                    <span>
+                                                        {transaction.day}
+                                                    </span>
                                                 </div>
                                                 <div className="h-[20px] border " />
                                                 <div className="text-green-400/60">
@@ -99,12 +82,16 @@ const Table: React.FC<Props> = ({ setOpenModalEdit, setOpenModalDelete }) => {
                                             </div>
                                         </td>
                                     </tr>
-                                    {transactions.map(
-                                        (transaction, subIndex) => (
+                                    {transaction?.transactions?.map(
+                                        (
+                                            transaction,
+                                            transactionIndex: any
+                                        ) => (
                                             <tr
-                                                key={`${day_date}_${subIndex}`}
                                                 className={`${
-                                                    (index + subIndex) % 2 === 0
+                                                    (index + transactionIndex) %
+                                                        2 ===
+                                                    0
                                                         ? 'bg-tableZ1'
                                                         : 'bg-tableZ2'
                                                 }`}
@@ -164,7 +151,7 @@ const Table: React.FC<Props> = ({ setOpenModalEdit, setOpenModalDelete }) => {
                         )}
                     </tbody>
                 </table>
-                {!balance?.transactions && (
+                {!balance?.transactionsGroup && (
                     <div className="flex justify-center items-center h-[200px]">
                         <p>Não há dados..</p>
                     </div>
