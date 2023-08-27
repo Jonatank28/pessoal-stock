@@ -35,7 +35,7 @@ export default function RootLayout({
     const pathName = usePathname()
 
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body className={inter.className}>
                 <AuthProvider>
                     <DataInitialProvider>

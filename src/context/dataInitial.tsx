@@ -21,6 +21,11 @@ interface Tag {
     id: number
     name: string
 }
+export interface Months {
+    month_number: string
+    month_name: string
+    year: string
+}
 
 interface Type {
     id: number
@@ -29,8 +34,9 @@ interface Type {
 
 export interface TransactionsGroup {
     day: string
-    revenue: string
-    expense: string
+    revenue: number
+    expense: number
+    net_amount: number
     currentBalance: string
     transactions: Transaction[]
 }
@@ -40,12 +46,15 @@ interface DataInitial {
     transactionsGroup: TransactionsGroup | null
     tags: Tag[]
     types: Type[]
+    months: Months[]
 }
 
-export interface DataInitialContextType {
+interface DataInitialContextType {
     balance: DataInitial | null
     setBalance: React.Dispatch<React.SetStateAction<DataInitial | null>>
-    getDataInitial: () => void
+    currentMonthActive: Months | null
+    setCurrentMonthActive: React.Dispatch<React.SetStateAction<Months | null>>
+    getDataInitial: (params: any) => Promise<void>
 }
 
 const dataInitialContext = createContext<DataInitialContextType>(
@@ -60,7 +69,9 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
     children,
 }) => {
     const [balance, setBalance] = useState<DataInitial | null>(null)
-    const { user } = useAuth()
+    const [currentMonthActive, setCurrentMonthActive] = useState<Months | null>(
+        null
+    )
 
     const formatValue = (value: number): string => {
         return new Intl.NumberFormat('pt-BR', {
@@ -69,9 +80,9 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
         }).format(value)
     }
 
-    const getDataInitial = async () => {
+    const getDataInitial = async (paramns: any) => {
         try {
-            const response = await api.post('dataInitial', { data: user })
+            const response = await api.post('dataInitial', { data: paramns })
             const balanceGlobal: BalanceGlobal | null = response.data
                 .balanceGlobal
                 ? {
@@ -94,21 +105,18 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
                 transactionsGroup,
                 tags,
                 types,
+                months: response.data.months,
             })
         } catch (err) {
             console.error(err)
         }
     }
 
-    useEffect(() => {
-        if (user) {
-            getDataInitial()
-        }
-    }, [user])
-
     const value: DataInitialContextType = {
         balance,
         setBalance,
+        setCurrentMonthActive,
+        currentMonthActive,
         getDataInitial,
     }
 

@@ -16,7 +16,7 @@ interface Props {
 
 const NewTransaction = ({ setOpenModal, openModal }: Props) => {
     const { user, setToast } = useAuth()
-    const { getDataInitial, balance } = useDataInitial()
+    const { getDataInitial, balance, setCurrentMonthActive } = useDataInitial()
 
     const {
         reset,
@@ -33,7 +33,35 @@ const NewTransaction = ({ setOpenModal, openModal }: Props) => {
             ...values,
             value: value,
             userID: user?.userID,
+            typeTransactionID: 1,
         }
+        const monthNames = [
+            'Janeiro',
+            'Fevereiro',
+            'Março',
+            'Abril',
+            'Maio',
+            'Junho',
+            'Julho',
+            'Agosto',
+            'Setembro',
+            'Outubro',
+            'Novembro',
+            'Dezembro',
+        ]
+
+        // @ts-ignore
+        const date = new Date(values.updateDate)
+        const year = date.getFullYear()
+        const month = date.getMonth() + 1
+
+        const dataFormat = {
+            ...user,
+            year: String(year),
+            month_number: `${month < 9 ? '0' : ''}${month + 1}`,
+            month_name: monthNames[month],
+        }
+
         try {
             const response = await api.post('transaction/new', data)
             if (response.status == 201) {
@@ -41,7 +69,7 @@ const NewTransaction = ({ setOpenModal, openModal }: Props) => {
                     status: true,
                     message: response.data.message,
                 })
-                getDataInitial()
+                getDataInitial(dataFormat)
                 setOpenModal(false)
                 reset()
                 setTimeout(() => {

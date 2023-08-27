@@ -26,6 +26,13 @@ const Table: React.FC<Props> = ({ setOpenModalEdit, setOpenModalDelete }) => {
         })
     }
 
+    const formatValue = (value: number): string => {
+        return new Intl.NumberFormat('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        }).format(value)
+    }
+
     return (
         <div className="w-full py-2">
             <div className="w-full overflow-hidden border border-table rounded-lg shadow-2xl">
@@ -62,21 +69,36 @@ const Table: React.FC<Props> = ({ setOpenModalEdit, setOpenModalDelete }) => {
                                                 <div className="text-green-400/60">
                                                     <span>
                                                         Entradas:{' '}
-                                                        <span>R$: 25,00</span>
+                                                        <span>
+                                                            R${' '}
+                                                            {formatValue(
+                                                                transaction.expense
+                                                            )}
+                                                        </span>
                                                     </span>
                                                 </div>
                                                 <div className="h-[20px] border " />
                                                 <div className="text-red-400/60">
                                                     <span>
                                                         Saidas:{' '}
-                                                        <span>R$: 37,00 </span>
+                                                        <span>
+                                                            R${' '}
+                                                            {formatValue(
+                                                                transaction.revenue
+                                                            )}
+                                                        </span>
                                                     </span>
                                                 </div>
                                                 <div className="h-[20px] border " />
                                                 <div className="text-blue-400/60">
                                                     <span>
                                                         Total:{' '}
-                                                        <span>R$: -12,00 </span>
+                                                        <span>
+                                                            R${' '}
+                                                            {formatValue(
+                                                                transaction.net_amount
+                                                            )}
+                                                        </span>
                                                     </span>
                                                 </div>
                                             </div>
@@ -113,7 +135,10 @@ const Table: React.FC<Props> = ({ setOpenModalEdit, setOpenModalDelete }) => {
                                                             : ''
                                                     }`}
                                                 >
-                                                    R$ {transaction.value}
+                                                    R${' '}
+                                                    {formatValue(
+                                                        transaction.value
+                                                    )}
                                                 </td>
                                                 <td className="border border-table px-6 py-3">
                                                     {transaction.typeID}

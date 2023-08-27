@@ -1,70 +1,72 @@
-import React, { useState, useEffect } from 'react'
-import ReactApexChart from 'react-apexcharts'
-import { chartPie } from '@/app/graficos/page'
+import React from 'react'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+import { Pie } from 'react-chartjs-2'
 
-const generateRandomColors = (numColors: number) => {
-    const colors = []
-    for (let i = 0; i < numColors; i++) {
-        const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`
-        colors.push(color)
+ChartJS.register(ArcElement, Tooltip, Legend)
+
+const calculatePercentage = (value, total) =>
+    ((value / total) * 100).toFixed(2) + '%'
+
+const PieChart = () => {
+    const data = {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [
+            {
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                ],
+                borderWidth: 1,
+            },
+        ],
     }
-    return colors
-}
 
-interface PieChartProps {
-    data: chartPie[]
-}
+    const total = data.datasets[0].data.reduce((acc, value) => acc + value, 0)
+    const percentages = data.datasets[0].data.map((value) =>
+        calculatePercentage(value, total)
+    )
 
-const PieChart = ({ data }: PieChartProps) => {
-    const [isDataLoaded, setIsDataLoaded] = useState(false)
-    const [chartData, setChartData] = useState<any>(null)
+    const labelsWithPercentagesAndTotal = data.labels.map((label, index) => {
+        const percentage = percentages[index]
+        const value = data.datasets[0].data[index]
+        return `${label}: ${value} (${percentage})`
+    })
 
-    useEffect(() => {
-        if (data) {
-            const series = data.map((item) => item.valueTotal)
-            const labels = data.map((item) => item.tag)
-            const colors = generateRandomColors(data.length)
-
-            setChartData({
-                series,
-                options: {
-                    chart: {
-                        type: 'pie',
-                    },
-                    labels,
-                    colors,
-                    legend: {
-                        show: true,
-                    },
-                    tooltip: {
-                        y: {
-                            formatter: function (value: number) {
-                                return value.toLocaleString('pt-BR', {
-                                    style: 'currency',
-                                    currency: 'BRL',
-                                    minimumFractionDigits: 2,
-                                })
-                            },
-                        },
-                    },
-                },
-            })
-
-            setIsDataLoaded(true)
-        }
-    }, [data])
+    const options = {
+        animation: {
+            animateScaleRotate: true,
+        },
+        plugins: {
+            legend: {
+                position: 'bottom',
+                display: true,
+            },
+        },
+    }
 
     return (
-        isDataLoaded &&
-        chartData && (
-            <ReactApexChart
-                options={chartData.options as ApexCharts.ApexOptions}
-                series={chartData.series}
-                type="pie"
-                width={500}
-                height={500}
+        <div style={{ width: '600px' }}>
+            <Pie
+                data={{
+                    labels: labelsWithPercentagesAndTotal,
+                    datasets: data.datasets,
+                }}
+                options={options}
             />
-        )
+        </div>
     )
 }
 

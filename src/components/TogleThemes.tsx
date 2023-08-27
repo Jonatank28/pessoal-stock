@@ -1,43 +1,26 @@
 'use client'
-import { useEffect, useState } from 'react'
+
+import React from 'react'
 import { useTheme } from 'next-themes'
+import { BiSun, BiMoon } from 'react-icons/bi'
+import { useLoaded } from '@/hooks/useLoad'
 
-interface Props {
-    className: string
-}
-
-const TogleThemes = ({ className, ...props }: Props) => {
+const ThemeSwitcher = () => {
     const { theme, setTheme } = useTheme()
-    const [mounted, setMounted] = useState(false)
-
-    function HandleClickTheme() {
-        if (theme === 'dark') {
-            setTheme('light')
-        } else {
-            setTheme('dark')
-        }
-    }
-
-    useEffect(() => {
-        setMounted(true)
-    })
-
-    if (!mounted) {
-        return null
-    }
-
+    const loaded = useLoaded()
     return (
-        <>
-            <button
-                style={{ zIndex: '99999' }}
-                onClick={HandleClickTheme}
-                className={className}
-                {...props}
-            >
-                {theme === 'dark' ? '🌞' : '🌙'}
-            </button>
-        </>
+        <button
+            onClick={() =>
+                theme === 'light' ? setTheme('dark') : setTheme('light')
+            }
+        >
+            {theme === 'light' && loaded ? (
+                <BiSun className="text-zinc-950" fontSize={20} />
+            ) : (
+                <BiMoon className="text-zinc-50" fontSize={20} />
+            )}
+        </button>
     )
 }
 
-export default TogleThemes
+export default ThemeSwitcher

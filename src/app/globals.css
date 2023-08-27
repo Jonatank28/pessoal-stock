@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 /* Temas */
 /* Light theme */
 :root {
@@ -16,6 +22,7 @@
     --bg-table-border: #ebebeb;
     --bg-table-z1: #f5f2f2;
     --bg-table-z2: #f5f5f5;
+
 }
 
 /* Dark theme */

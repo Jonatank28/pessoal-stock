@@ -1,5 +1,4 @@
-import React from 'react'
-import { menuSidebarProps } from '@/types/menuSideBar'
+import { menuSidebarProps } from '@/types/MenuSideBar'
 
 const MenusSideBar = () => {
     const data: menuSidebarProps[] = [
@@ -10,6 +9,11 @@ const MenusSideBar = () => {
         },
         {
             id: 2,
+            title: 'Investimentos',
+            route: 'investiment',
+        },
+        {
+            id: 3,
             title: 'Gráficos',
             route: 'graficos',
         },

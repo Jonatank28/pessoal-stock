@@ -78,7 +78,7 @@ const EditTransaction = ({ openModalEdit, setOpenModalEdit }: Props) => {
                 status: true,
                 message: response.data.message,
             })
-            getDataInitial()
+            getDataInitial(null)
             setOpenModalEdit(null)
             reset()
             setTimeout(() => {

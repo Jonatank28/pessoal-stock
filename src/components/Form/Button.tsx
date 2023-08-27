@@ -1,4 +1,5 @@
 import React from 'react'
+import { twMerge } from 'tailwind-merge'
 
 interface Props {
     title: string
@@ -12,7 +13,9 @@ const Button = ({ title, className, type, onClick }: Props) => {
         <button
             onClick={onClick}
             type={type}
-            className={`px-2 border-none text-white  transition-colors shadow-2x1 rounded-lg p-2 ${className}`}
+            className={twMerge(
+                `px-2 border-none text-white  transition-colors shadow-2x1 rounded-lg p-2 ${className}`
+            )}
         >
             {title}
         </button>
