@@ -83,6 +83,13 @@ const DataInitialProvider: React.FC<DataInitialProviderProps> = ({
     const getDataInitial = async (paramns: any) => {
         try {
             const response = await api.post('dataInitial', { data: paramns })
+            if (paramns.month_name) {
+                setCurrentMonthActive({
+                    year: paramns.year,
+                    month_number: paramns.month_number,
+                    month_name: paramns.month_name,
+                })
+            }
             const balanceGlobal: BalanceGlobal | null = response.data
                 .balanceGlobal
                 ? {

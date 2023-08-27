@@ -24,7 +24,7 @@ const DeleteTransaction = ({ openModalDelete, setOpenModalDelete }: Props) => {
                     status: true,
                     message: response.data.message,
                 })
-                getDataInitial()
+                getDataInitial(null)
                 setOpenModalDelete(null)
                 setTimeout(() => {
                     setToast(null)

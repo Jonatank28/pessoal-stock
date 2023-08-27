@@ -10,6 +10,7 @@ import useDataInitial from '@/hooks/useDataInitial'
 import { modalEdit } from '@/app/dashboard/page'
 import { useEffect } from 'react'
 import DateInput from '../Form/Date'
+import { monthNames } from '@/services/data'
 
 interface Props {
     openModalEdit: modalEdit | any
@@ -65,12 +66,22 @@ const EditTransaction = ({ openModalEdit, setOpenModalEdit }: Props) => {
 
     //! Edita a transação
     const onSubmit: SubmitHandler<FormData> = async (values) => {
+        // @ts-ignore
+        const date = new Date(values.updateDate)
+        const year = date.getFullYear()
+        const month = date.getMonth() + 1
+
         const formatData = {
+            ...user,
             ...values,
             userID: user?.userID,
             // @ts-ignore
             value: formatValue(values.value),
+            year: String(year),
+            month_number: `${month < 9 ? '0' : ''}${month}`,
+            month_name: monthNames[month],
         }
+
         const data = formatData
         const response = await api.put(`transaction/update`, data)
         if (response.status == 201) {
@@ -78,7 +89,7 @@ const EditTransaction = ({ openModalEdit, setOpenModalEdit }: Props) => {
                 status: true,
                 message: response.data.message,
             })
-            getDataInitial(null)
+            getDataInitial(formatData)
             setOpenModalEdit(null)
             reset()
             setTimeout(() => {

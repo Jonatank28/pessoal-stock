@@ -41,7 +41,7 @@ const Page = () => {
             {chartData ? (
                 <div className=" bg-black/80 p-3 rounded-lg mt-4">
                     <h2 className="text-lg text-primary">Por tag</h2>
-                    <PieChart data={chartData.chartPie} />
+                    <PieChart data={chartData.pie} />
                 </div>
             ) : (
                 <div>Loading...</div>

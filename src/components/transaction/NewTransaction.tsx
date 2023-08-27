@@ -8,6 +8,7 @@ import { api } from '@/services/api'
 import useAuth from '@/hooks/useAuth'
 import useDataInitial from '@/hooks/useDataInitial'
 import DateInput from '../Form/Date'
+import { monthNames } from '@/services/data'
 
 interface Props {
     openModal: boolean
@@ -35,20 +36,6 @@ const NewTransaction = ({ setOpenModal, openModal }: Props) => {
             userID: user?.userID,
             typeTransactionID: 1,
         }
-        const monthNames = [
-            'Janeiro',
-            'Fevereiro',
-            'Março',
-            'Abril',
-            'Maio',
-            'Junho',
-            'Julho',
-            'Agosto',
-            'Setembro',
-            'Outubro',
-            'Novembro',
-            'Dezembro',
-        ]
 
         // @ts-ignore
         const date = new Date(values.updateDate)
@@ -58,7 +45,7 @@ const NewTransaction = ({ setOpenModal, openModal }: Props) => {
         const dataFormat = {
             ...user,
             year: String(year),
-            month_number: `${month < 9 ? '0' : ''}${month + 1}`,
+            month_number: `${month < 9 ? '0' : ''}${month}`,
             month_name: monthNames[month],
         }
 
